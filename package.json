@@ -39,7 +39,7 @@
     "debounce"
   ],
   "license": "MIT",
-  "main": "build/index.js",
+  "main": "./build/index.js",
   "maintainers": [
     {
       "email": "andrew@varnerin.info",
@@ -63,5 +63,6 @@
     "start:styleguide": "styleguidist server",
     "test": "react-scripts-ts test --env=jsdom"
   },
+  "types": "./build/index.d.ts",
   "version": "0.1.0"
 }
