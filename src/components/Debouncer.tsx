@@ -51,10 +51,7 @@ export type OnChangeEventArg<T> = T | React.FormEvent<{ value: T }>;
 type DebouncerState<T> = { selectedValue: T; selectedValueFromProps: T };
 export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, DebouncerState<T>> {
 
-  public static getDerivedStateFromProps<T>(
-    props: DebouncerProps<T>,
-    state: DebouncerState<T>
-  ) {
+  public static getDerivedStateFromProps<T>(props: DebouncerProps<T>, state: DebouncerState<T>) {
     if (props.selectedValue === state.selectedValueFromProps) {
       return state;
     }

@@ -31,11 +31,14 @@ export class DebouncedInput extends React.PureComponent<DebouncedInputProps>
     );
   }
 
-  private innerRender = (value: string, onChange: (newVal: OnChangeEventArg<string>) => void) => {
+  private innerRender = (uiValue: string, innerOnChange: (newVal: OnChangeEventArg<string>) => void) => {
+    const { value, onChange, ...restProps } = this.props;
+
     return (
       <input
-        value={value}
-        onChange={onChange}
+        value={uiValue}
+        onChange={innerOnChange}
+        {...restProps}
       />
     )
   }
