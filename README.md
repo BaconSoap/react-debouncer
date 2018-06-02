@@ -11,9 +11,10 @@ For the common case of debouncing a text input, you can use [`<DebouncedInput />
 Example usage ([see it in action](https://codesandbox.io/s/qlr3kmvrv4)):
 
 ```tsx
-import { DebouncedInput, OnChangeEventArg } from 'react-debouncer';
+import * as React from 'react';
+import { DebouncedInput, OnChangeHandler } from 'react-debouncer';
 
-export class DebounceDisplay extends React.PureComponent<{}, { value: string }> {
+class DebounceDisplay extends React.PureComponent<{}, { value: string }> {
   public constructor(p: {}) {
     super(p);
     this.state = { value: 'initial value' };
@@ -22,17 +23,14 @@ export class DebounceDisplay extends React.PureComponent<{}, { value: string }> 
   public render() {
     return (
       <React.Fragment>
-        <DebouncedInput
-          value={this.state.value}
-          onChange={this.onChange as (e: OnChangeEventArg<string>) => void}
-        />
+        <DebouncedInput value={this.state.value} onChange={this.onChange} />
         <br />
         Global state value: {this.state.value}
       </React.Fragment>
     );
   }
 
-  private onChange = (newVal: string) => {
+  private onChange: OnChangeHandler = (newVal: string) => {
     this.setState({ value: newVal });
   };
 }
