@@ -14,21 +14,22 @@
       "url": "https://varnerin.info"
     }
   ],
-  "dependencies": {
-    "react": "^16.4.0",
-    "react-docgen-typescript": "^1.5.0",
-    "react-dom": "^16.4.0",
-    "react-scripts-ts": "2.16.0",
-    "react-styleguidist": "^7.0.16"
-  },
   "description": "Enables easy debouncing of change events while still presenting a responsive UI",
   "devDependencies": {
     "@types/jest": "^23.0.0",
     "@types/node": "^10.3.0",
     "@types/react": "^16.3.16",
     "@types/react-dom": "^16.0.5",
-    "typescript": "^2.9.1"
+    "typescript": "^2.9.1",
+    "react-docgen-typescript": "^1.5.0",
+    "react-dom": "^16.4.0",
+    "react-scripts-ts": "2.16.0",
+    "react-styleguidist": "^7.0.16"
   },
+  "files": [
+    "build/",
+    "CODE_OF_CONDUCT.md"
+  ],
   "homepage": "https://github.com/baconsoap/react-debouncer",
   "keywords": [
     "react",
@@ -37,6 +38,7 @@
     "debounce"
   ],
   "license": "MIT",
+  "main": "build/index.js",
   "maintainers": [
     {
       "email": "andrew@varnerin.info",
@@ -46,11 +48,16 @@
   ],
   "name": "react-debouncer",
   "private": false,
+  "peerDependencies": {
+    "react": "^16.4.0"
+  },
   "repository": "BaconSoap/react-debouncer",
   "scripts": {
     "build": "react-scripts-ts build",
+    "build:library": "tsc --project tsconfig.release.json",
     "build:styleguide": "styleguidist build",
     "eject": "react-scripts-ts eject",
+    "prepublish": "yarn build:library",
     "start": "react-scripts-ts start",
     "start:styleguide": "styleguidist server",
     "test": "react-scripts-ts test --env=jsdom"

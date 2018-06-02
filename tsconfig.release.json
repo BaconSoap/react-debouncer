@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/components"
+  ],
+  "compilerOptions": {
+    "outDir": "build",
+    "rootDir": "src/components",
+    "declaration": true,
+    "allowJs": false
+  }
+}
