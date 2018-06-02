@@ -47,7 +47,8 @@ export type DebouncerProps<T> = {
 };
 
 
-export type OnChangeEventArg<T> = T | React.FormEvent<{ value: T }>;
+export type OnChangeEventArg<T = string> = T | React.FormEvent<{ value: T }>;
+export type OnChangeHandler<T = string> = (newValue: OnChangeEventArg<T>) => void;
 type DebouncerState<T> = { selectedValue: T; selectedValueFromProps: T };
 export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, DebouncerState<T>> {
 

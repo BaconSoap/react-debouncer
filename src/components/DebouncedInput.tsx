@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Debouncer, OnChangeEventArg } from "./Debouncer";
+import { Debouncer, OnChangeHandler } from "./Debouncer";
 
 export type DebouncedInputProps = {
   value: string;
@@ -31,7 +31,7 @@ export class DebouncedInput extends React.PureComponent<DebouncedInputProps>
     );
   }
 
-  private innerRender = (uiValue: string, innerOnChange: (newVal: OnChangeEventArg<string>) => void) => {
+  private innerRender = (uiValue: string, innerOnChange: OnChangeHandler) => {
     const { value, onChange, ...restProps } = this.props;
 
     return (

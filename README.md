@@ -8,6 +8,36 @@ Wrap your component in `<Debouncer />` by passing it into `component`, or implem
 
 For the common case of debouncing a text input, you can use [`<DebouncedInput />`](src/components/DebouncedInput.tsx) ([docs](src/components/DebouncedInput.md)). This is also an example implementation of `<Debouncer />`.
 
+Example usage ([see it in action](https://codesandbox.io/s/qlr3kmvrv4)):
+
+```tsx
+import { DebouncedInput, OnChangeEventArg } from 'react-debouncer';
+
+export class DebounceDisplay extends React.PureComponent<{}, { value: string }> {
+  public constructor(p: {}) {
+    super(p);
+    this.state = { value: 'initial value' };
+  }
+
+  public render() {
+    return (
+      <React.Fragment>
+        <DebouncedInput
+          value={this.state.value}
+          onChange={this.onChange as (e: OnChangeEventArg<string>) => void}
+        />
+        <br />
+        Global state value: {this.state.value}
+      </React.Fragment>
+    );
+  }
+
+  private onChange = (newVal: string) => {
+    this.setState({ value: newVal });
+  };
+}
+```
+
 ## Development
 
 Run `yarn start:styleguide` to start the styleguidist server and open the url it mentions
