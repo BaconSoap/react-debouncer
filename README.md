@@ -42,7 +42,7 @@ Run `yarn start:styleguide` to start the styleguidist server and open the url it
 
 ## License
 
-MIT License, 2018, Andrew Varnerin.
+MIT License, Andrew Varnerin 2018.
 
 ## Code of Conduct
 
