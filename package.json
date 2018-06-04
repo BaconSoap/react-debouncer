@@ -68,5 +68,5 @@
     "test": "react-scripts-ts test --env=jsdom"
   },
   "types": "./build/index.d.ts",
-  "version": "0.3.0"
+  "version": "0.4.0"
 }
