@@ -1,4 +1,5 @@
 import * as React from "react";
+import { polyfill } from 'react-lifecycles-compat';
 
 export type DebouncerProps<T> = {
 
@@ -119,3 +120,5 @@ export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, Debounc
     return val as T;
   }
 }
+
+polyfill(Debouncer);

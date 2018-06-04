@@ -15,6 +15,10 @@
     }
   ],
   "description": "Enables easy debouncing of change events while still presenting a responsive UI",
+  "dependencies": {
+    "react-lifecycles-compat": "^3.0.4",
+    "type-zoo": "^2.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^23.0.0",
     "@types/node": "^10.3.0",
@@ -50,7 +54,7 @@
   "name": "react-debouncer",
   "private": false,
   "peerDependencies": {
-    "react": "^16.4.0"
+    "react": "^16.0.0"
   },
   "repository": "BaconSoap/react-debouncer",
   "scripts": {
@@ -64,8 +68,5 @@
     "test": "react-scripts-ts test --env=jsdom"
   },
   "types": "./build/index.d.ts",
-  "version": "0.3.0",
-  "dependencies": {
-    "type-zoo": "^2.0.0"
-  }
+  "version": "0.3.0"
 }

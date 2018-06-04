@@ -1,8 +1,16 @@
 # `react-debouncer`
 
-Enables easy debouncing of change events while still presenting a responsive UI.
+Enables easy debouncing of change events while still presenting a responsive UI. See [the styleguide](https://react-debouncer.varnerin.info) for full component documentation.
 
 ## Usage
+
+Install using yarn or npm:
+
+```sh
+yarn install react-debouncer
+```
+
+Since this is a typescript-first project, typings are included in the package.
 
 Wrap your component in `<Debouncer />` by passing it into `component`, or implement a `render<T>(value: T, onChange: (newValue: T) => void)` function.
 
@@ -30,7 +38,7 @@ class DebounceDisplay extends React.PureComponent<{}, { value: string }> {
     );
   }
 
-  private onChange: OnChangeHandler = (newVal: string) => {
+  private onChange = (newVal: string) => {
     this.setState({ value: newVal });
   };
 }
