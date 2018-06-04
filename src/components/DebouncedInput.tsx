@@ -1,13 +1,16 @@
 import * as React from "react";
+import { Overwrite } from 'type-zoo';
 import { Debouncer, OnChangeHandler } from "./Debouncer";
 
 export type DebouncedInputProps = {
   value: string;
   onChange: (newVal: string) => void;
   debounceDelayMs?: number;
-} & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+};
 
-export class DebouncedInput extends React.PureComponent<DebouncedInputProps>
+type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+export class DebouncedInput extends React.PureComponent<Overwrite<InputProps, DebouncedInputProps>>
 {
   public render() {
     const { debounceDelayMs } = this.props;
@@ -15,10 +18,6 @@ export class DebouncedInput extends React.PureComponent<DebouncedInputProps>
 
     if (value === undefined) {
       value = '';
-    }
-
-    if (typeof value !== 'string') {
-      value = value.toString();
     }
 
     return (
