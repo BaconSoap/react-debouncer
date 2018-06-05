@@ -13,7 +13,7 @@ type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputEle
 export class DebouncedInput extends React.PureComponent<Overwrite<InputProps, DebouncedInputProps>>
 {
   public render() {
-    const { debounceDelayMs } = this.props;
+    const { debounceDelayMs = 300 } = this.props;
     let { value } = this.props;
 
     if (value === undefined) {
@@ -22,7 +22,7 @@ export class DebouncedInput extends React.PureComponent<Overwrite<InputProps, De
 
     return (
       <Debouncer
-        debounceDelayMs={debounceDelayMs === undefined ? 300 : debounceDelayMs}
+        debounceDelayMs={debounceDelayMs}
         selectedValue={value}
         onChange={this.props.onChange}
         render={this.innerRender}
@@ -31,7 +31,7 @@ export class DebouncedInput extends React.PureComponent<Overwrite<InputProps, De
   }
 
   private innerRender = (uiValue: string, innerOnChange: OnChangeHandler) => {
-    const { value, onChange, ...restProps } = this.props;
+    const { value, onChange, debounceDelayMs, ...restProps } = this.props;
 
     return (
       <input
