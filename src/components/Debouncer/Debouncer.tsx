@@ -119,6 +119,3 @@ export class Debouncer<TValue> extends React.PureComponent<DebouncerProps<TValue
     return val as TValue;
   }
 }
-
-
-export default Debouncer;
