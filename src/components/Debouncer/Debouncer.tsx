@@ -1,5 +1,4 @@
 import * as React from "react";
-import { polyfill } from 'react-lifecycles-compat';
 
 type DebouncerState<TValue> = { selectedValue: TValue; selectedValueFromProps: TValue };
 
@@ -132,6 +131,5 @@ export class Debouncer<TValue> extends React.PureComponent<DebouncerProps<TValue
   }
 }
 
-polyfill(Debouncer);
 
 export default Debouncer;
