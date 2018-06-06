@@ -1,10 +1,22 @@
 import * as React from "react";
 import { Overwrite } from 'type-zoo';
-import { Debouncer, OnChangeHandler } from "./Debouncer";
+import { Debouncer } from '../Debouncer/Debouncer';
 
 export type DebouncedInputProps = {
+  /**
+   * Currently selected value from external state. If this changes, it instantly takes precedence over
+   * the internally-tracked value.
+   */
   value: string;
+
+  /**
+   * Function to call when the value has been changed and the debounce timeout has been hit.
+   */
   onChange: (newVal: string) => void;
+
+  /**
+   * Delay in milliseconds before the change is emitted externally
+   */
   debounceDelayMs?: number;
 };
 
@@ -30,7 +42,7 @@ export class DebouncedInput extends React.PureComponent<Overwrite<InputProps, De
     );
   }
 
-  private innerRender = (uiValue: string, innerOnChange: OnChangeHandler) => {
+  private innerRender = (uiValue: string, innerOnChange: (newVal: React.ChangeEvent<HTMLInputElement>) => void) => {
     const { value, onChange, debounceDelayMs, ...restProps } = this.props;
 
     return (

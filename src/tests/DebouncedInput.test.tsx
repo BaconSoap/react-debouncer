@@ -3,6 +3,15 @@ import * as React from 'react';
 import { DebouncedInput } from '../components';
 
 describe('DebouncedInput', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   const getDefaultProps = () => ({
     debounceDelayMs: 500,
     onChange: (newVal: string) => void (0),
@@ -63,7 +72,7 @@ describe('DebouncedInput', () => {
     wrapper.unmount();
   });
 
-  it('should call onChange after a quiet period', (done) => {
+  it('should call onChange after a quiet period', () => {
     const { value } = getDefaultProps();
 
     let externalValue = value;
@@ -79,18 +88,15 @@ describe('DebouncedInput', () => {
 
     inputOnChange({ currentTarget: { value: value + '_updated' } } as any);
 
-    setTimeout(() => {
-      // force the external wrapper to respond to the state change and re-render
-      wrapper.update();
+    jest.advanceTimersByTime(105);
+    // force the external wrapper to respond to the state change and re-render
+    wrapper.update();
 
-      const inputAfterChange = wrapper.find('input');
+    const inputAfterChange = wrapper.find('input');
 
-      expect(inputAfterChange.props().value).toBe(value + '_updated');
-      expect(externalValue).toBe(value + '_updated');
+    expect(inputAfterChange.props().value).toBe(value + '_updated');
+    expect(externalValue).toBe(value + '_updated');
 
-      wrapper.unmount();
-
-      done();
-    }, 105);
+    wrapper.unmount();
   });
-})
+});
