@@ -1,2 +1,2 @@
-export { Debouncer, DebouncerProps, OnChangeEventArg, OnChangeHandler } from './Debouncer';
-export { DebouncedInput, DebouncedInputProps } from './DebouncedInput';
+export { Debouncer, DebouncerProps } from './Debouncer/Debouncer';
+export { DebouncedInput, DebouncedInputProps } from './DebouncedInput/DebouncedInput';

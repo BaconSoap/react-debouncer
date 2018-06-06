@@ -1,8 +1,9 @@
 import * as React from "react";
 import { polyfill } from 'react-lifecycles-compat';
 
-export type DebouncerProps<T> = {
+type DebouncerState<TValue> = { selectedValue: TValue; selectedValueFromProps: TValue };
 
+export type DebouncerProps<TValue> = {
   /**
    * Delay in milliseconds before we emit the change externally
    */
@@ -12,12 +13,12 @@ export type DebouncerProps<T> = {
    * Currently selected value from external state. If this changes, it instantly takes precedence over
    * the internally-tracked value.
    */
-  selectedValue: T;
+  selectedValue: TValue;
 
   /**
    * Function to call when the value has been changed and the debounce timeout has been hit.
    */
-  onChange: (newValue: T) => void;
+  onChange: (newValue: TValue) => void;
 
   /**
    * Controls rendering by using a function that returns a JSX element. Only one of `render` or
@@ -32,8 +33,8 @@ export type DebouncerProps<T> = {
    * This function must be called with the *entire* current value, and not only the incremental change.
    */
   render: (
-    selectedValue: T,
-    onChange: (newValue: T) => void
+    selectedValue: TValue,
+    onChange: (newValue: TValue | any) => void
   ) => React.ReactNode;
 
   /**
@@ -44,14 +45,20 @@ export type DebouncerProps<T> = {
    *
    * `props.onChange` behaves as it does in the `render` prop.
    */
-  component?: React.ComponentType<{ value: T, onChange: (newValue: T) => void }>;
+  component?: React.ComponentType<{ value: TValue, onChange: (newValue: TValue) => void }>;
+
+  /**
+   * Function to extract the value of type `TValue` from the inner onChange event of type `TEvent`.
+   * If not specified, the following logic is used to try to extract the value, based on common usage:
+   *
+   * 1. If the argument to `onChange` is a `number` or `string`, use that
+   * 2. If the argument has a `currentTarget`, use `currentTarget.value`
+   * 3. Else use the input value as-is
+   */
+  extractValueFromEvent?: <TEvent>(e: TEvent) => TValue;
 };
 
-
-export type OnChangeEventArg<T = string> = T | React.FormEvent<{ value: T }>;
-export type OnChangeHandler<T = string> = (newValue: OnChangeEventArg<T>) => void;
-type DebouncerState<T> = { selectedValue: T; selectedValueFromProps: T };
-export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, DebouncerState<T>> {
+export class Debouncer<TValue> extends React.PureComponent<DebouncerProps<TValue>, DebouncerState<TValue>> {
 
   public static getDerivedStateFromProps<T>(props: DebouncerProps<T>, state: DebouncerState<T>) {
     if (props.selectedValue === state.selectedValueFromProps) {
@@ -66,7 +73,7 @@ export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, Debounc
 
   private timeoutId: any | null;
 
-  public constructor(p: any) {
+  public constructor(p: DebouncerProps<TValue>) {
     super(p);
 
     this.timeoutId = null;
@@ -78,7 +85,7 @@ export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, Debounc
   }
 
 
-  public render() {
+  public render(): null | React.ReactNode {
     if (this.props.render) {
       return this.props.render(this.state.selectedValue, this.onChange);
     }
@@ -92,7 +99,7 @@ export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, Debounc
     }
   };
 
-  private onChange = (e: T) => {
+  private onChange = (e: TValue) => {
     this.clearTimeout();
 
     const newValue = this.extractValue(e);
@@ -106,19 +113,25 @@ export class Debouncer<T> extends React.PureComponent<DebouncerProps<T>, Debounc
     });
   };
 
-  private extractValue = (val: OnChangeEventArg<T>): T => {
+  private extractValue = (val: TValue | React.FormEvent<{ value: TValue }>): TValue => {
+    if (this.props.extractValueFromEvent) {
+      return (this.props.extractValueFromEvent(val));
+    }
+
     if (typeof val === 'string' || typeof val === 'number') {
       return val;
     }
 
-    const formEventVal = val as React.FormEvent<{ value: T }>;
+    const formEventVal = val as React.FormEvent<{ value: TValue }>;
 
     if (formEventVal.currentTarget) {
       return formEventVal.currentTarget.value;
     }
 
-    return val as T;
+    return val as TValue;
   }
 }
 
 polyfill(Debouncer);
+
+export default Debouncer;
