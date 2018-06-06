@@ -4,7 +4,7 @@ type DebouncerState<TValue> = { selectedValue: TValue; selectedValueFromProps: T
 
 export type DebouncerProps<TValue> = {
   /**
-   * Delay in milliseconds before we emit the change externally
+   * Delay in milliseconds before we emit the change externally. 300 is a good arbitrary number.
    */
   debounceDelayMs: number;
 
