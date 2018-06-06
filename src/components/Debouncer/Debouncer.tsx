@@ -20,8 +20,7 @@ export type DebouncerProps<TValue> = {
   onChange: (newValue: TValue) => void;
 
   /**
-   * Controls rendering by using a function that returns a JSX element. Only one of `render` or
-   * `component` may be set.
+   * Controls rendering by using a function that returns a JSX element.
    *
    * The inner `selectedValue` is the internally-tracked value and may not yet have been propagated
    * up via the onChange prop. Use this value to prevent input lag.
@@ -35,16 +34,6 @@ export type DebouncerProps<TValue> = {
     selectedValue: TValue,
     onChange: (newValue: TValue | any) => void
   ) => React.ReactNode;
-
-  /**
-   * Controls rendering by using a component that takes in props (this can be either a functional
-   * stateless component or a class-based component). Only one of `render` or `component` may be set.
-   *
-   * `props.value` behaves as it does in the `render` prop.
-   *
-   * `props.onChange` behaves as it does in the `render` prop.
-   */
-  component?: React.ComponentType<{ value: TValue, onChange: (newValue: TValue) => void }>;
 
   /**
    * Function to extract the value of type `TValue` from the inner onChange event of type `TEvent`.
